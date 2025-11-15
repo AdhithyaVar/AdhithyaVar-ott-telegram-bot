@@ -78,3 +78,38 @@ Heroku (example):
 
 ## Disclaimer
 No DRM circumvention logic is included; do not add any.
+# yt-dlp (Optional, Lawful) Support
+
+This bot can optionally use `yt-dlp` for sources you legally control and that allow server-side downloads.
+
+## Enable
+
+1. Set in `.env`:
+```
+YTDLP_ENABLED=true
+```
+
+2. Allowlist domains explicitly (admin commands):
+- `/ytdlp_allow example.com`
+- `/ytdlp_list`
+- `/ytdlp_disallow example.com`
+
+3. (Optional) Add site credentials for that domain if the source requires login:
+- `/site_cred_add https://example.com user@example.com SuperSecret`
+
+When the bot encounters a URL whose domain is on the allowlist and `YTDLP_ENABLED=true`, it will use yt-dlp to download the file locally before processing/transcoding.
+
+## Notes
+
+- Do not add domains that prohibit downloading or use DRM.
+- The bot still prefers official adapters (in `app/sites/registry.py`) when available.
+- If no adapter is found, the yt-dlp path is used only when enabled and allowlisted; otherwise it falls back to direct HTTP download of the provided URL.
+
+## Security
+
+- Credentials are stored encrypted with Fernet (`ENCRYPTION_KEY`).
+- `.env` is ignored by git; do not commit secrets.
+
+## Legal
+
+Use only for media you have the rights to download and process. No DRM circumvention or Terms-of-Service violations.
