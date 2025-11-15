@@ -1,8 +1,8 @@
-from sqlalchemy import create_engine, Column, String, Integer, Boolean, DateTime, JSON, UniqueConstraint, Index
-from sqlalchemy.orm import sessionmaker, declarative_base
-from sqlalchemy.sql import func
+from pymongo import MongoClient
 from .config import settings
 
+client = MongoClient(settings.MONGODB_URI)
+db = client["your_db_name"]
 engine = create_engine(settings.DATABASE_URL, future=True)
 SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False, expire_on_commit=False)
 Base = declarative_base()
